@@ -19,10 +19,7 @@ pipeline {
 
         stage('Run Application') {
             steps {
-                sh '''
-                . venv/bin/activate
-                python3 app.py
-                '''
+                sh 'nohup . venv/bin/activate && python3 app.py > flask.log 2>&1 &'
             }
         }
 
