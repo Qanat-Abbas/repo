@@ -5,7 +5,7 @@ pipeline {
         EMAIL = "qanatabbas14@gmail.com"
     }
 
-    stage('Install Dependencies') {
+    stages('Install Dependencies') {
     steps {
         sh '''
         python3 -m venv venv
@@ -15,7 +15,7 @@ pipeline {
     }
       }
 
-    stage('Run Application') {
+    stages('Run Application') {
     steps {
         sh '''
         . venv/bin/activate
