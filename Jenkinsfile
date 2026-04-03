@@ -5,24 +5,28 @@ pipeline {
         EMAIL = "qanatabbas14@gmail.com"
     }
 
-    stages('Install Dependencies') {
-    steps {
-        sh '''
-        python3 -m venv venv
-        . venv/bin/activate
-        pip install -r requirements.txt
-        '''
-    }
-      }
+    stages {
 
-    stages('Run Application') {
-    steps {
-        sh '''
-        . venv/bin/activate
-        python3 app.py
-        '''
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                python3 -m venv venv
+                . venv/bin/activate
+                pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Run Application') {
+            steps {
+                sh '''
+                . venv/bin/activate
+                python3 app.py
+                '''
+            }
+        }
+
     }
-      }
 
     post {
         success {
