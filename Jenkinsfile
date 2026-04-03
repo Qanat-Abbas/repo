@@ -6,16 +6,9 @@ pipeline {
     }
 
     stages {
-        stage('Clone') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Qanat-Abbas/repo.git'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 sh '''
-                echo "Installing dependencies..."
                 pip3 install -r requirements.txt
                 '''
             }
@@ -24,7 +17,6 @@ pipeline {
         stage('Run Application') {
             steps {
                 sh '''
-                echo "Running app..."
                 python3 app.py
                 '''
             }
@@ -34,7 +26,7 @@ pipeline {
     post {
         success {
             emailext (
-                subject: "SUCCESS: Job ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                subject: "SUCCESS: ${env.JOB_NAME}",
                 body: "Build Successful ✅",
                 to: "${EMAIL}"
             )
@@ -42,7 +34,7 @@ pipeline {
 
         failure {
             emailext (
-                subject: "FAILED: Job ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                subject: "FAILED: ${env.JOB_NAME}",
                 body: "Build Failed ❌",
                 to: "${EMAIL}"
             )
